@@ -80,7 +80,7 @@ class ViewController: UIViewController {
     
     @IBAction func peopleOnChanged(sender: UISlider) {
         numberOfPeople = Int(sender.value)
-        tipAmountPerPerson.text = String(format: "$%0.2f", tipAmount/Double(numberOfPeople))
+        tipAmountPerPerson.text = formatter.stringFromNumber(tipAmount/Double(numberOfPeople))
         switch numberOfPeople {
         case 1:
             peopleIconLabel.text = "👩"
@@ -124,7 +124,7 @@ class ViewController: UIViewController {
         
         tipPercentLabel.text = String(format: "%d%%",Int(tipPercentSlider.value))
         
-        billAmountTextField.text = formatter.stringFromNumber(billAmount)
+        billAmountTextField.text = String(format: "%0.1f", billAmount)//formatter.stringFromNumber(billAmount)
         tipLabel.text = formatter.stringFromNumber(tipAmount)
         totalAmountLabel.text = formatter.stringFromNumber(totalAmount)
         tipAmountPerPerson.text = formatter.stringFromNumber(tipAmount/Double(numberOfPeople))
