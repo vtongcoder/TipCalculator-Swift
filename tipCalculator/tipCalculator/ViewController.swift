@@ -29,10 +29,14 @@ class ViewController: UIViewController {
     
     // Save tip value
     var defaults = NSUserDefaults.standardUserDefaults()
-    
+    // Locale
+    var formatter = NSNumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        billAmountTextField.placeholder = formatter.stringFromNumber(0)
+        
         // Do any additional setup after loading the view, typically from a nib.
         showOrHidePersonTip(false)
         didLoadBefore = defaults.boolForKey("didLoadBefore")
@@ -44,10 +48,7 @@ class ViewController: UIViewController {
             println("Set default value")
         }
         else {
-            
             initUpdateValues()
-            
-            
         }
         
     }
@@ -101,9 +102,9 @@ class ViewController: UIViewController {
             billAmount  = Double((billAmountTextField.text as NSString).floatValue)
             tipAmount   = billAmount * Double(tipPercent)/100
             totalAmount = billAmount + tipAmount
-            tipLabel.text = String(format: "$%0.1f",tipAmount)
-            totalAmountLabel.text = String(format: "$%0.1f",totalAmount)
-            tipAmountPerPerson.text = String(format: "$%0.2f", tipAmount/Double(numberOfPeople))
+            tipLabel.text = formatter.stringFromNumber(tipAmount)
+            totalAmountLabel.text = formatter.stringFromNumber(totalAmount)
+            tipAmountPerPerson.text = formatter.stringFromNumber(tipAmount/Double(numberOfPeople))
             showOrHidePersonTip(true)
             
             defaults.setDouble(billAmount, forKey: "billAmount")
@@ -117,16 +118,16 @@ class ViewController: UIViewController {
     func initUpdateValues(){
         billAmount = defaults.doubleForKey("billAmount")
         tipPercent = defaults.integerForKey("tipPercent")
-        println("Bill: \(billAmount), %: \(tipPercent)")
         tipAmount   = billAmount * Double(tipPercent)/100
         totalAmount = billAmount + tipAmount
         tipPercentSlider.value = Float(tipPercent)
-        tipPercentLabel.text = String(format: "%d%%",Int(tipPercentSlider.value))
-        billAmountTextField.text = String(format: "%0.0f",billAmount)
-        tipLabel.text = String(format: "$%0.1f",tipAmount)
-        totalAmountLabel.text = String(format: "$%0.1f",totalAmount)
-        tipAmountPerPerson.text = String(format: "$%0.2f", tipAmount/Double(numberOfPeople))
         
+        tipPercentLabel.text = String(format: "%d%%",Int(tipPercentSlider.value))
+        
+        billAmountTextField.text = formatter.stringFromNumber(billAmount)
+        tipLabel.text = formatter.stringFromNumber(tipAmount)
+        totalAmountLabel.text = formatter.stringFromNumber(totalAmount)
+        tipAmountPerPerson.text = formatter.stringFromNumber(tipAmount/Double(numberOfPeople))
         showOrHidePersonTip(true)
     }
     
