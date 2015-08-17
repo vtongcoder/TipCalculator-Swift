@@ -229,6 +229,7 @@
                         <outlet property="tipAmountPerPerson" destination="xa0-e5-nyQ" id="ipg-wL-PXL"/>
                         <outlet property="tipLabel" destination="eq3-da-gjB" id="adN-Ip-bqN"/>
                         <outlet property="tipPercentLabel" destination="xVb-nm-Kd9" id="5eI-Xm-vdf"/>
+                        <outlet property="tipPercentSlider" destination="ecu-7b-XkG" id="wQg-i4-SH8"/>
                         <outlet property="tipPersonView" destination="SlX-j8-lBH" id="ruG-Ar-c10"/>
                         <outlet property="totalAmountLabel" destination="Z1j-qE-Fbf" id="jmj-Da-k4P"/>
                     </connections>

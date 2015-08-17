@@ -18,16 +18,38 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipAmountPerPerson: UILabel!
     @IBOutlet weak var peopleIconLabel: UILabel!
     @IBOutlet weak var tipPersonView: UIView!
+    @IBOutlet weak var tipPercentSlider: UISlider!
     
     var tipPercent:Int = 10
     var billAmount: Double = 0.0
     var tipAmount: Double = 0.0
     var totalAmount: Double = 0.0
     var numberOfPeople: Int = 1
+    var didLoadBefore: Bool = false
+    
+    // Save tip value
+    var defaults = NSUserDefaults.standardUserDefaults()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         showOrHidePersonTip(false)
+        didLoadBefore = defaults.boolForKey("didLoadBefore")
+        if didLoadBefore != true {
+            defaults.setBool(true, forKey: "didLoadBefore")
+            defaults.setInteger(10, forKey: "tipPercent")
+            defaults.setDouble(0, forKey: "billAmount")
+            defaults.synchronize()
+            println("Set default value")
+        }
+        else {
+            
+            initUpdateValues()
+            
+            
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,15 +61,13 @@ class ViewController: UIViewController {
         // Add auto focus on textfield
         billAmountTextField.becomeFirstResponder()
     }
+    override func viewDidDisappear(animated: Bool) {
+        defaults.setDouble(billAmount, forKey: "billAmount")
+        defaults.setInteger(tipPercent, forKey: "tipPercent")
+        defaults.synchronize()
+
+    }
     @IBAction func onTextChanging(sender: UITextField) {
-//        if sender.text != "" {
-//            billAmount      = Double(sender.text.toInt()!)
-//            tipAmount       = billAmount * tipPercent
-//            totalAmount     = billAmount + tipAmount
-//            tipLabel.text = String(format: "$%0.1f",tipAmount)
-//            totalAmountLabel.text = String(format: "$%0.1f",totalAmount)
-//            tipAmountPerPerson.text = String(format: "$%0.2f", tipAmount/Double(numberOfPeople))
-//        }
         updateAmount()
     }
     @IBAction func tipPercentSliderOnChanged(sender: UISlider) {
@@ -78,17 +98,36 @@ class ViewController: UIViewController {
     
     func updateAmount(){
         if billAmountTextField.text != "" {
-            billAmount  = Double(billAmountTextField.text.toInt()!)
+            billAmount  = Double((billAmountTextField.text as NSString).floatValue)
             tipAmount   = billAmount * Double(tipPercent)/100
             totalAmount = billAmount + tipAmount
             tipLabel.text = String(format: "$%0.1f",tipAmount)
             totalAmountLabel.text = String(format: "$%0.1f",totalAmount)
             tipAmountPerPerson.text = String(format: "$%0.2f", tipAmount/Double(numberOfPeople))
             showOrHidePersonTip(true)
+            
+            defaults.setDouble(billAmount, forKey: "billAmount")
+            defaults.setInteger(tipPercent, forKey: "tipPercent")
+            defaults.synchronize()
+            
         } else {
             showOrHidePersonTip(false)
         }
-
+    }
+    func initUpdateValues(){
+        billAmount = defaults.doubleForKey("billAmount")
+        tipPercent = defaults.integerForKey("tipPercent")
+        println("Bill: \(billAmount), %: \(tipPercent)")
+        tipAmount   = billAmount * Double(tipPercent)/100
+        totalAmount = billAmount + tipAmount
+        tipPercentSlider.value = Float(tipPercent)
+        tipPercentLabel.text = String(format: "%d%%",Int(tipPercentSlider.value))
+        billAmountTextField.text = String(format: "%0.0f",billAmount)
+        tipLabel.text = String(format: "$%0.1f",tipAmount)
+        totalAmountLabel.text = String(format: "$%0.1f",totalAmount)
+        tipAmountPerPerson.text = String(format: "$%0.2f", tipAmount/Double(numberOfPeople))
+        
+        showOrHidePersonTip(true)
     }
     
     func showOrHidePersonTip(isShow: Bool){
