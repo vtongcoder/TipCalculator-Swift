@@ -35,6 +35,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewDidAppear(animated: Bool) {
+        // Add auto focus on textfield
+        billAmountTextField.becomeFirstResponder()
+    }
     @IBAction func onTextChanging(sender: UITextField) {
 //        if sender.text != "" {
 //            billAmount      = Double(sender.text.toInt()!)
