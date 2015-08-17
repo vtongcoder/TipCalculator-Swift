@@ -24,6 +24,7 @@
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
+                                    <action selector="onTextChanging:" destination="vXZ-lx-hvc" eventType="editingChanged" id="4ak-vt-dZw"/>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="4YT-Bm-zhL"/>
                                 </connections>
                             </textField>
@@ -45,8 +46,8 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="$0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1j-qE-Fbf">
-                                <rect key="frame" x="531" y="185" width="39" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1j-qE-Fbf">
+                                <rect key="frame" x="531" y="184" width="39" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -75,6 +76,11 @@
                             <constraint firstAttribute="trailing" secondItem="FRd-5g-TKf" secondAttribute="trailing" constant="30" id="juo-0a-zKG"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="buildAmountTextField" destination="FRd-5g-TKf" id="MzR-H7-Wbd"/>
+                        <outlet property="tipLabel" destination="eq3-da-gjB" id="adN-Ip-bqN"/>
+                        <outlet property="totalAmountLabel" destination="Z1j-qE-Fbf" id="jmj-Da-k4P"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
